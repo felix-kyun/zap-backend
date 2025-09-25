@@ -5,6 +5,7 @@ import {
     generateAccessToken,
     generateAccessTokenFromUser,
     generateRefreshToken,
+    verifyAccessToken,
     verifyRefreshToken,
 } from "@services/auth.js";
 import { redis } from "@utils/database/redis.js";
@@ -19,6 +20,8 @@ interface LoginRequest {
 interface LoginResponse {
     name: string;
     id: string;
+    email: string;
+    username: string;
 }
 
 export async function login(
@@ -58,6 +61,8 @@ export async function login(
     res.status(StatusCodes.OK).json({
         id: user._id.toString(),
         name: user.name,
+        email: user.email,
+        username: user.username,
     });
 }
 
@@ -74,6 +79,7 @@ export async function logout(
     if (refreshToken) {
         await redis.del(`refresh:${refreshToken}`);
         res.clearCookie("refreshToken");
+        res.clearCookie("accessToken");
     }
 
     res.status(StatusCodes.OK).json({ message: "Logged out successfully" });
@@ -113,4 +119,47 @@ export async function refresh(
     });
 
     res.status(StatusCodes.OK).json({ token: accessToken });
+}
+
+export function AuthStatus(
+    req: Request,
+    res: Response<{ authenticated: boolean }>,
+): void {
+    const accessToken = req.cookies.accessToken as string;
+
+    if (!accessToken || !verifyAccessToken(accessToken)) {
+        res.status(StatusCodes.UNAUTHORIZED).json({ authenticated: false });
+        return;
+    }
+
+    res.status(StatusCodes.OK).json({ authenticated: true });
+}
+
+export async function getCurrentUser(
+    req: Request,
+    res: Response<LoginResponse>,
+): Promise<void> {
+    const accessToken = req.cookies.accessToken as string;
+
+    if (!accessToken)
+        throw new ServerError(
+            "No access token provided",
+            StatusCodes.UNAUTHORIZED,
+        );
+
+    const payload = verifyAccessToken(accessToken);
+
+    if (!payload)
+        throw new ServerError("Invalid access token", StatusCodes.UNAUTHORIZED);
+
+    const user = await User.findById(payload.id).exec();
+
+    if (!user) throw new ServerError("User not found", StatusCodes.NOT_FOUND);
+
+    res.status(StatusCodes.OK).json({
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        username: user.username,
+    });
 }
