@@ -31,3 +31,4 @@ export const JWT_REFRESH_SECRET =
 export const MONGO_URI =
     process.env.MONGO_URI ?? "mongodb://localhost:27017/Paz";
 export const REDIS_URI = process.env.REDIS_URI ?? "redis://localhost:6379";
+export const OPAQUE_SERVER_SETUP = process.env.OPAQUE_SERVER_SETUP ?? "";

@@ -7,7 +7,8 @@ import { notFoundMiddleware } from "@middlewares/notFound.middleware.js";
 import { authRouter } from "@routes/auth.routes.js";
 import { csrfRouter } from "@routes/csrf.routes.js";
 import { debugRouter } from "@routes/debug.routes.js";
-import { userRouter } from "@routes/user.routes.js";
+import { loginRouter } from "@routes/login.routes.js";
+import { registerRouter } from "@routes/register.routes.js";
 import { connectMongo } from "@utils/database/mongo.js";
 import { connectRedis } from "@utils/database/redis.js";
 import cookieParser from "cookie-parser";
@@ -29,7 +30,8 @@ app.use(express.json());
 /* Routes */
 app.use("/api/csrf", csrfRouter);
 app.use(verifyCsrf());
-app.use("/api/users", userRouter);
+app.use("/api/register", registerRouter);
+app.use("/api/login", loginRouter);
 app.use("/api/auth", authRouter);
 
 /* Testing Routes */

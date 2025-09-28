@@ -8,13 +8,18 @@ interface Payload {
     id: mongoose.Types.ObjectId;
     username: string;
     email: string;
+    session: string;
 }
 
-export async function generateRefreshToken(user: IUser): Promise<string> {
+export async function generateRefreshToken(
+    user: IUser,
+    session: string,
+): Promise<string> {
     const payload: Payload = {
         id: user._id,
         username: user.username,
         email: user.email,
+        session,
     };
 
     const refreshToken = jwt.sign(payload, JWT_REFRESH_SECRET, {
@@ -28,22 +33,32 @@ export async function generateRefreshToken(user: IUser): Promise<string> {
     return refreshToken;
 }
 
-export function generateAccessTokenFromUser(user: IUser): string {
+export function generateAccessTokenFromUser(
+    user: IUser,
+    session: string,
+): string {
     const payload: Payload = {
         id: user._id,
         username: user.username,
         email: user.email,
+        session,
     };
 
     return generateAccessToken(payload);
 }
 
-export function generateAccessToken({ id, username, email }: Payload): string {
+export function generateAccessToken({
+    id,
+    username,
+    email,
+    session,
+}: Payload): string {
     return jwt.sign(
         {
             id,
             username,
             email,
+            session,
         },
         JWT_SECRET,
         { expiresIn: "15m" },

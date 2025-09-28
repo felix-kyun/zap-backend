@@ -6,7 +6,7 @@ export interface IUser extends Document {
     username: string;
     name: string;
     email: string;
-    password: string;
+    record: string;
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -33,7 +33,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>({
         trim: true,
         match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
-    password: {
+    record: {
         type: String,
         required: true,
     },
