@@ -5,7 +5,7 @@ import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 interface RegistrationStartRequest {
-    username: string;
+    email: string;
     request: string;
 }
 
@@ -22,15 +22,15 @@ export function registerStart(
     >,
     res: Response<RegistrationStartResponse>,
 ) {
-    const { username, request } = req.body;
+    const { email, request } = req.body;
 
-    if (!username || !request)
+    if (!email || !request)
         throw new ServerError(
             "Missing required fields",
             StatusCodes.BAD_REQUEST,
         );
 
-    const response = Opaque.startRegistration(username, request);
+    const response = Opaque.startRegistration(email, request);
 
     res.status(StatusCodes.OK).json({
         response,
@@ -40,7 +40,6 @@ export function registerStart(
 interface RegistrationFinishRequest {
     username: string;
     email: string;
-    name: string;
     record: string;
 }
 
@@ -48,20 +47,17 @@ export async function registerFinish(
     req: Request<unknown, unknown, RegistrationFinishRequest, unknown>,
     res: Response,
 ) {
-    const { username, email, name, record } = req.body;
+    const { username, email, record } = req.body;
 
-    if (!username || !email || !name || !record)
+    if (!username || !email || !record)
         throw new ServerError(
             "Missing required fields",
             StatusCodes.BAD_REQUEST,
         );
 
     const existingUser = await User.findOne({
-        $or: [{ username }, { email }],
+        email,
     });
-
-    if (existingUser && existingUser.username === username)
-        throw new ServerError("Username already exists", StatusCodes.CONFLICT);
 
     if (existingUser && existingUser.email === email)
         throw new ServerError("Email already exists", StatusCodes.CONFLICT);
@@ -69,7 +65,6 @@ export async function registerFinish(
     const user = await User.create({
         username,
         email,
-        name,
         record,
     });
 
@@ -77,6 +72,5 @@ export async function registerFinish(
         id: user._id,
         username: user.username,
         email: user.email,
-        name: user.name,
     });
 }

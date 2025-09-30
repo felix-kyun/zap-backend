@@ -81,7 +81,6 @@ export function AuthStatus(
 
 interface CurrentUserResponse {
     id: string;
-    name: string;
     email: string;
     username: string;
 }
@@ -109,7 +108,6 @@ export async function getCurrentUser(
 
     res.status(StatusCodes.OK).json({
         id: user._id.toString(),
-        name: user.name,
         email: user.email,
         username: user.username,
     });

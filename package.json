@@ -37,7 +37,6 @@
     "dependencies": {
         "@redis/client": "^5.8.2",
         "@serenity-kit/opaque": "^0.9.0",
-        "bcrypt": "^6.0.0",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
         "dotenv": "^17.2.1",

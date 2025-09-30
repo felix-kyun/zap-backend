@@ -11,19 +11,19 @@ if (OPAQUE_SERVER_SETUP === "") {
     process.exit(1);
 }
 
-function startRegistration(username: string, request: string): string {
+function startRegistration(email: string, request: string): string {
     const { registrationResponse } = opaque.server.createRegistrationResponse({
         serverSetup: OPAQUE_SERVER_SETUP,
         registrationRequest: request,
-        userIdentifier: username,
+        userIdentifier: email,
     });
 
     return registrationResponse;
 }
 
-function startLogin(username: string, record: string, request: string) {
+function startLogin(email: string, record: string, request: string) {
     const { serverLoginState, loginResponse } = opaque.server.startLogin({
-        userIdentifier: username,
+        userIdentifier: email,
         registrationRecord: record,
         startLoginRequest: request,
         serverSetup: OPAQUE_SERVER_SETUP,

@@ -11,7 +11,7 @@ import {
 import { ENV } from "@config";
 
 interface LoginStartRequest {
-    username: string;
+    email: string;
     request: string;
 }
 
@@ -24,23 +24,19 @@ export async function loginStart(
     req: Request<unknown, LoginStartResponse, LoginStartRequest>,
     res: Response<LoginStartResponse>,
 ) {
-    const { request, username } = req.body;
+    const { request, email } = req.body;
 
-    if (!request || !username)
+    if (!request || !email)
         throw new ServerError(
             "Missing required fields",
             StatusCodes.BAD_REQUEST,
         );
 
-    const user = await User.findOne({ username }).lean();
+    const user = await User.findOne({ email }).lean();
 
     if (!user) throw new ServerError("User not found", StatusCodes.NOT_FOUND);
 
-    const { state, response } = Opaque.startLogin(
-        username,
-        user.record,
-        request,
-    );
+    const { state, response } = Opaque.startLogin(email, user.record, request);
 
     const session = crypto.randomUUID();
 
@@ -48,7 +44,7 @@ export async function loginStart(
         `authSession:${session}`,
         JSON.stringify({
             state,
-            username,
+            email,
         }),
         { EX: 60 * 5 },
     );
@@ -60,7 +56,6 @@ export async function loginStart(
 }
 
 interface LoginFinishRequest {
-    username: string;
     session: string;
     request: string;
 }
@@ -85,16 +80,16 @@ export async function loginFinish(
             StatusCodes.BAD_REQUEST,
         );
 
-    const { state, username } = JSON.parse(authSession) as {
+    const { state, email } = JSON.parse(authSession) as {
         state: string;
-        username: string;
+        email: string;
     };
 
     const sessionKey = Opaque.finishLogin(state, request);
 
     await redis.del(`authSession:${session}`);
 
-    const user = await User.findOne({ username }).lean();
+    const user = await User.findOne({ email }).lean();
 
     // This should never happen
     // as we already checked for user existence in loginStart
@@ -124,7 +119,6 @@ export async function loginFinish(
 
     res.status(StatusCodes.OK).json({
         id: user._id.toString(),
-        name: user.name,
         email: user.email,
         username: user.username,
     });
