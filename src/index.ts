@@ -4,11 +4,13 @@ import { csrf, verifyCsrf } from "@middlewares/csrf.middleware.js";
 import { errorHandler } from "@middlewares/error.middleware.js";
 import { loggerMiddleware } from "@middlewares/logger.middleware.js";
 import { notFoundMiddleware } from "@middlewares/notFound.middleware.js";
+import { verifyTokenMiddleware } from "@middlewares/verifyToken.middleware.js";
 import { authRouter } from "@routes/auth.routes.js";
 import { csrfRouter } from "@routes/csrf.routes.js";
 import { debugRouter } from "@routes/debug.routes.js";
 import { loginRouter } from "@routes/login.routes.js";
 import { registerRouter } from "@routes/register.routes.js";
+import { vaultRouter } from "@routes/vault.routes.js";
 import { connectMongo } from "@utils/database/mongo.js";
 import { connectRedis } from "@utils/database/redis.js";
 import cookieParser from "cookie-parser";
@@ -33,6 +35,7 @@ app.use(verifyCsrf());
 app.use("/api/register", registerRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/vault", vaultRouter);
 
 /* Testing Routes */
 if (["development", "test"].includes(ENV)) app.use("/api/debug", debugRouter);
