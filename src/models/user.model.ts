@@ -5,6 +5,7 @@ export interface IUser extends Document {
     username: string;
     email: string;
     record: string;
+    vault: string;
 }
 
 const userSchema: Schema<IUser> = new Schema<IUser>({
@@ -25,6 +26,10 @@ const userSchema: Schema<IUser> = new Schema<IUser>({
     record: {
         type: String,
         required: true,
+    },
+    vault: {
+        type: String,
+        required: false,
     },
 });
 

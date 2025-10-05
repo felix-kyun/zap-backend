@@ -4,7 +4,7 @@ import { redis } from "@utils/database/redis.js";
 import jwt from "jsonwebtoken";
 import type mongoose from "mongoose";
 
-interface Payload {
+export interface Payload {
     id: mongoose.Types.ObjectId;
     username: string;
     email: string;
