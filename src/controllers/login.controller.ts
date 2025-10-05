@@ -117,6 +117,14 @@ export async function loginFinish(
         maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
+    res.cookie("authenticated", "true", {
+        httpOnly: false,
+        secure: ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+
     res.status(StatusCodes.OK).json({
         id: user._id.toString(),
         email: user.email,

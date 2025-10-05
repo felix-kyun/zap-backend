@@ -24,6 +24,7 @@ export async function logout(
         await redis.del(`refresh:${refreshToken}`);
         res.clearCookie("refreshToken");
         res.clearCookie("accessToken");
+        res.clearCookie("authenticated");
     }
 
     res.status(StatusCodes.OK).json({ message: "Logged out successfully" });
@@ -59,6 +60,14 @@ export async function refresh(
         httpOnly: true,
         secure: ENV === "production",
         sameSite: "strict",
+        maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+
+    res.cookie("authenticated", "true", {
+        httpOnly: false,
+        secure: ENV === "production",
+        sameSite: "strict",
+        path: "/",
         maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
