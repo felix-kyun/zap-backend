@@ -1,14 +1,14 @@
+import { ENV } from "@config";
 import { ServerError } from "@errors/ServerError.error.js";
-import type { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
-import Opaque from "@services/opaque.js";
 import { User } from "@models/user.model.js";
-import { redis } from "@utils/database/redis.js";
 import {
     generateAccessTokenFromUser,
     generateRefreshToken,
 } from "@services/auth.js";
-import { ENV } from "@config";
+import Opaque from "@services/opaque.js";
+import { redis } from "@utils/database/redis.js";
+import type { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 
 interface LoginStartRequest {
     email: string;

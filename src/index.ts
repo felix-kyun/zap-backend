@@ -4,7 +4,6 @@ import { csrf, verifyCsrf } from "@middlewares/csrf.middleware.js";
 import { errorHandler } from "@middlewares/error.middleware.js";
 import { loggerMiddleware } from "@middlewares/logger.middleware.js";
 import { notFoundMiddleware } from "@middlewares/notFound.middleware.js";
-import { verifyTokenMiddleware } from "@middlewares/verifyToken.middleware.js";
 import { authRouter } from "@routes/auth.routes.js";
 import { csrfRouter } from "@routes/csrf.routes.js";
 import { debugRouter } from "@routes/debug.routes.js";
