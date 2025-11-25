@@ -32,3 +32,6 @@ export const MONGO_URI =
     process.env.MONGO_URI ?? "mongodb://localhost:27017/Paz";
 export const REDIS_URI = process.env.REDIS_URI ?? "redis://localhost:6379";
 export const OPAQUE_SERVER_SETUP = process.env.OPAQUE_SERVER_SETUP ?? "";
+// mail
+export const MAIL_USER = process.env.MAIL_USER ?? "";
+export const MAIL_PASSWORD = process.env.MAIL_PASSWORD ?? "";
