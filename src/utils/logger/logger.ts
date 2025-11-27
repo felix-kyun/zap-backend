@@ -7,7 +7,7 @@ import pino, {
     type TransportSingleOptions,
 } from "pino";
 
-import { logFileTransport } from "./logFileTransport.js";
+import { logFileTransport } from "@utils/logger/logFileTransport.js";
 
 /* clear log file */
 // truncateSync(join(__dirname, LOGFILE), 0);

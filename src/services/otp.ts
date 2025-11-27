@@ -1,6 +1,6 @@
-import { redis } from "@utils/database/redis.js";
-import { sendMail } from "@services/mail.js";
 import { ServerError } from "@errors/ServerError.error.js";
+import { sendMail } from "@services/mail.js";
+import { redis } from "@utils/database/redis.js";
 import { StatusCodes } from "http-status-codes";
 
 export async function generateOTP(email: string) {

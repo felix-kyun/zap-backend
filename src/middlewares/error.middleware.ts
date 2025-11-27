@@ -14,7 +14,7 @@ interface IErrorResponse {
 // function can return void if it doesn't want to handle the error
 type ErrorResponse =
     | IErrorResponse
-    | { fn: (err: Error) => IErrorResponse | void };
+    | { fn: (err: Error) => IErrorResponse | null };
 
 const errorMap: Record<KnownError, ErrorResponse> = {
     CastError: {
@@ -29,6 +29,7 @@ const errorMap: Record<KnownError, ErrorResponse> = {
                     message: "Duplicate key error",
                 };
             }
+            return null;
         },
     },
 };

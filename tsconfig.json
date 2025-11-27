@@ -5,30 +5,25 @@
         "project": "./tsconfig.json",
         "rootDir": "./src",
         "outDir": "./dist",
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "paths": {
-            "@logger": ["src/utils/logger/logger.js"],
-            "@config": ["src/utils/config/config.js"],
-            "@utils/*": ["src/utils/*"],
-            "@errors/*": ["src/errors/*"],
-            "@middlewares/*": ["src/middlewares/*"],
-            "@controllers/*": ["src/controllers/*"],
-            "@routes/*": ["src/routes/*"],
-            "@models/*": ["src/models/*"],
-            "@services/*": ["src/services/*"],
-            "@types/*": ["src/types/*"],
-            "@/*": ["src/*"]
+            "@logger": ["utils/logger/logger.js"],
+            "@config": ["utils/config/config.js"],
+            "@utils/*": ["utils/*"],
+            "@errors/*": ["errors/*"],
+            "@middlewares/*": ["middlewares/*"],
+            "@controllers/*": ["controllers/*"],
+            "@routes/*": ["routes/*"],
+            "@models/*": ["models/*"],
+            "@services/*": ["services/*"],
+            "@types/*": ["types/*"],
+            "@/*": ["*"]
         },
 
-        // Environment Settings
-        // See also https://aka.ms/tsconfig/module
         "module": "nodenext",
         "target": "esnext",
-        "types": [],
-        // For nodejs:
-        // "lib": ["esnext"],
-        // "types": ["node"],
-        // and npm install -D @types/node
+        "lib": ["esnext"],
+        "types": ["node"],
 
         // Other Outputs
         "sourceMap": true,
@@ -40,18 +35,18 @@
         "exactOptionalPropertyTypes": true,
 
         // Style Options
-        // "noImplicitReturns": true,
-        // "noImplicitOverride": true,
-        // "noUnusedLocals": true,
-        // "noUnusedParameters": true,
-        // "noFallthroughCasesInSwitch": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitOverride": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
         // "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedSideEffectImports": true,
 
         // Recommended Options
-        "strict": true,
         "verbatimModuleSyntax": true,
         "isolatedModules": true,
-        "noUncheckedSideEffectImports": true,
         "useDefineForClassFields": true,
         "moduleDetection": "force",
         "skipLibCheck": true,
