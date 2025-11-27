@@ -36,7 +36,11 @@ export async function loginStart(
 
     if (!user) throw new ServerError("User not found", StatusCodes.NOT_FOUND);
 
-    const { state, response } = Opaque.startLogin(email, user.record, request);
+    const { state, response } = Opaque.startLogin(
+        email,
+        user.auth.data,
+        request,
+    );
 
     const session = crypto.randomUUID();
 

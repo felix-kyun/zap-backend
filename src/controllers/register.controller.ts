@@ -78,7 +78,10 @@ export async function registerFinish(
     const user = await User.create({
         username,
         email,
-        record,
+        auth: {
+            type: "opaque",
+            data: record,
+        },
     });
 
     res.status(StatusCodes.CREATED).json({

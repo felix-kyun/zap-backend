@@ -1,10 +1,11 @@
 import { Document, Model, model, Schema, Types } from "mongoose";
+import { AuthSchema, type IAuth } from "@models/auth.schema.js";
 
 export interface IUser extends Document {
     _id: Types.ObjectId;
     username: string;
     email: string;
-    record: string;
+    auth: IAuth;
     vault: string;
 }
 
@@ -23,10 +24,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>({
         trim: true,
         match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
-    record: {
-        type: String,
-        required: true,
-    },
+    auth: AuthSchema,
     vault: {
         type: String,
         required: false,
