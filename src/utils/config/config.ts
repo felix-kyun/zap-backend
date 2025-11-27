@@ -35,3 +35,5 @@ export const OPAQUE_SERVER_SETUP = process.env.OPAQUE_SERVER_SETUP ?? "";
 // mail
 export const MAIL_USER = process.env.MAIL_USER ?? "";
 export const MAIL_PASSWORD = process.env.MAIL_PASSWORD ?? "";
+// auth
+export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID ?? "";

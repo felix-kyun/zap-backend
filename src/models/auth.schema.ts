@@ -7,7 +7,7 @@ export interface IAuth {
     data: string;
 }
 
-export const AuthSchema: Schema<IAuth> = new Schema({
+export const AuthSchema = new Schema<IAuth>({
     type: {
         type: String,
         required: true,

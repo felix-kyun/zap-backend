@@ -1,5 +1,5 @@
-import { Document, Model, model, Schema, Types } from "mongoose";
 import { AuthSchema, type IAuth } from "@models/auth.schema.js";
+import { Document, Model, model, Schema, Types } from "mongoose";
 
 export interface IUser extends Document {
     _id: Types.ObjectId;

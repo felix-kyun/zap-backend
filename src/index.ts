@@ -8,6 +8,7 @@ import { authRouter } from "@routes/auth.routes.js";
 import { csrfRouter } from "@routes/csrf.routes.js";
 import { debugRouter } from "@routes/debug.routes.js";
 import { loginRouter } from "@routes/login.routes.js";
+import { oauthRouter } from "@routes/oauth.routes.js";
 import { registerRouter } from "@routes/register.routes.js";
 import { vaultRouter } from "@routes/vault.routes.js";
 import { connectMongo } from "@utils/database/mongo.js";
@@ -33,6 +34,7 @@ app.use("/api/csrf", csrfRouter);
 app.use(verifyCsrf());
 app.use("/api/register", registerRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/oauth", oauthRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/vault", vaultRouter);
 

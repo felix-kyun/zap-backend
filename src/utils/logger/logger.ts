@@ -1,4 +1,5 @@
 import { __dirname, ENV, LOG_LEVEL, LOGFILE } from "@config";
+import { logFileTransport } from "@utils/logger/logFileTransport.js";
 import { writeFileSync } from "fs";
 import { join } from "path";
 import pino, {
@@ -6,8 +7,6 @@ import pino, {
     type LoggerOptions,
     type TransportSingleOptions,
 } from "pino";
-
-import { logFileTransport } from "@utils/logger/logFileTransport.js";
 
 /* clear log file */
 // truncateSync(join(__dirname, LOGFILE), 0);

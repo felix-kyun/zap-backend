@@ -1,14 +1,12 @@
-import { ENV } from "@config";
 import { ServerError } from "@errors/ServerError.error.js";
 import { User } from "@models/user.model.js";
-import {
-    generateAccessTokenFromUser,
-    generateRefreshToken,
-} from "@services/auth.js";
 import Opaque from "@services/opaque.js";
+import { attachLoginCookies } from "@utils/attachLoginCookies.js";
 import { redis } from "@utils/database/redis.js";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+
+import type { LoginResponse } from "@/types/login.types.js";
 
 interface LoginStartRequest {
     email: string;
@@ -65,8 +63,8 @@ interface LoginFinishRequest {
 }
 
 export async function loginFinish(
-    req: Request<unknown, unknown, LoginFinishRequest>,
-    res: Response,
+    req: Request<unknown, LoginResponse, LoginFinishRequest>,
+    res: Response<LoginResponse>,
 ) {
     const { session, request } = req.body;
 
@@ -89,7 +87,7 @@ export async function loginFinish(
         email: string;
     };
 
-    const sessionKey = Opaque.finishLogin(state, request);
+    Opaque.finishLogin(state, request);
 
     await redis.del(`authSession:${session}`);
 
@@ -103,31 +101,8 @@ export async function loginFinish(
             StatusCodes.INTERNAL_SERVER_ERROR,
         );
 
-    // generate tokens
-    const refreshToken = await generateRefreshToken(user, sessionKey);
-    const accessToken = generateAccessTokenFromUser(user, sessionKey);
-
-    res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: ENV === "production",
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
-
-    res.cookie("accessToken", accessToken, {
-        httpOnly: true,
-        secure: ENV === "production",
-        sameSite: "strict",
-        maxAge: 15 * 60 * 1000, // 15 minutes
-    });
-
-    res.cookie("authenticated", "true", {
-        httpOnly: false,
-        secure: ENV === "production",
-        sameSite: "strict",
-        path: "/",
-        maxAge: 15 * 60 * 1000, // 15 minutes
-    });
+    // attach tokens
+    await attachLoginCookies(user, res);
 
     res.status(StatusCodes.OK).json({
         id: user._id.toString(),
