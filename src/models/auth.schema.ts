@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const AuthTypes = ["opaque"] as const;
+const AuthTypes = ["opaque", "google"] as const;
 
 export interface IAuth {
     type: (typeof AuthTypes)[number];
