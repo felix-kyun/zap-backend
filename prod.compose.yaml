@@ -2,6 +2,7 @@
 services:
     paz:
         image: felixkyun/paz:latest
+        restart: unless-stopped
         ports:
             - "3000:3000"
         depends_on:
@@ -11,6 +12,7 @@ services:
             - .env
     mongo:
         image: mongo:7
+        restart: unless-stopped
         volumes:
             - mongo-data:/data/db
     redis:
