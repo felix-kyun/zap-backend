@@ -7,6 +7,7 @@ import { notFoundMiddleware } from "@middlewares/notFound.middleware.js";
 import { authRouter } from "@routes/auth.routes.js";
 import { csrfRouter } from "@routes/csrf.routes.js";
 import { debugRouter } from "@routes/debug.routes.js";
+import { healthCheckRouter } from "@routes/health.routes.js";
 import { loginRouter } from "@routes/login.routes.js";
 import { oauthRouter } from "@routes/oauth.routes.js";
 import { registerRouter } from "@routes/register.routes.js";
@@ -30,6 +31,7 @@ app.use(helmet());
 app.use(express.json());
 
 /* Routes */
+app.use("/api/health", healthCheckRouter);
 app.use("/api/csrf", csrfRouter);
 app.use(verifyCsrf());
 app.use("/api/register", registerRouter);
