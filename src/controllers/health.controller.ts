@@ -34,10 +34,13 @@ export async function healthCheck(
         db.push({ name: "redis", status: "error" });
     }
 
-    res.status(200).json({
-        status: db.every((e) => e.status === "ok") ? "ok" : "error",
+    const status: Status = db.every((e) => e.status === "ok") ? "ok" : "error";
+    const statusCode: number = status === "ok" ? 200 : 500;
+
+    res.status(statusCode).json({
+        status,
         uptime: process.uptime(),
-        timestamp: Date.now().toLocaleString(),
+        timestamp: new Date().toISOString(),
         db,
     });
 }
