@@ -1,4 +1,5 @@
 import { redis } from "@utils/database/redis.js";
+import { timed } from "@utils/timed.js";
 import type { Request, Response } from "express";
 import mongoose from "mongoose";
 
@@ -27,7 +28,8 @@ export async function healthCheck(
 
     // redis
     try {
-        if ((await redis.ping()) === "PONG") {
+        const pong = await timed(() => redis.ping(), 1000);
+        if (pong === "PONG") {
             db.push({ name: "redis", status: "ok" });
         } else throw new Error("Redis not connected");
     } catch {
