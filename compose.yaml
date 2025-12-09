@@ -2,7 +2,7 @@
 services:
     app:
         build: .
-        container_name: paz-dev
+        container_name: zap-dev
         ports:
             - "3000:3000"
         volumes:
