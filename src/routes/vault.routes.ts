@@ -7,4 +7,4 @@ export const vaultRouter: Router = Router();
 vaultRouter.use(verifyTokenMiddleware);
 
 vaultRouter.post("/", getVault);
-vaultRouter.post("/sync", updateVault);
+vaultRouter.put("/sync", updateVault);

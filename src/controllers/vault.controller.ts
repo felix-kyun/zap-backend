@@ -1,5 +1,6 @@
 import { ServerError } from "@errors/ServerError.error.js";
 import { User } from "@models/user.model.js";
+import type { IVault } from "@models/vault.schema.js";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -11,15 +12,11 @@ export async function getVault(req: Request, res: Response): Promise<void> {
     const user = await User.findById(id).lean();
     if (!user) throw new ServerError("User not found", StatusCodes.NOT_FOUND);
 
-    res.status(StatusCodes.OK).json({ vault: user.vault || "" });
-}
-
-interface UpdateVaultRequest {
-    vault: string;
+    res.status(StatusCodes.OK).json(user.vault);
 }
 
 export async function updateVault(
-    req: Request<unknown, unknown, UpdateVaultRequest, unknown>,
+    req: Request<unknown, unknown, IVault, unknown>,
     res: Response,
 ): Promise<void> {
     const id = req.payload?.id;
@@ -29,7 +26,7 @@ export async function updateVault(
     const user = await User.findById(id).exec();
     if (!user) throw new ServerError("User not found", StatusCodes.NOT_FOUND);
 
-    const { vault } = req.body;
+    const vault = req.body;
     if (!vault) {
         throw new ServerError("Vault is required", StatusCodes.BAD_REQUEST);
     }
