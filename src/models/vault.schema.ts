@@ -1,5 +1,11 @@
 import { Schema, SchemaTypes } from "mongoose";
 
+export interface IVaultItem {
+    id: string;
+    nonce: string;
+    ciphertext: string;
+}
+
 export interface IVault {
     salt: string;
     meta: {
@@ -7,11 +13,7 @@ export interface IVault {
     };
     settings: unknown;
     unlock: unknown;
-    items: Array<{
-        id: string;
-        nonce: string;
-        ciphertext: string;
-    }>;
+    items: Array<IVaultItem>;
     createdAt: Date;
     updatedAt: Date;
 }

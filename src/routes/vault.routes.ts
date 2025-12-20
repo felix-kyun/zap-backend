@@ -1,10 +1,34 @@
-import { getVault, updateVault } from "@controllers/vault.controller.js";
-import { verifyTokenMiddleware } from "@middlewares/verifyToken.middleware.js";
+import {
+    createVault,
+    createVaultItem,
+    deleteVaultItem,
+    getVault,
+    getVaultItem,
+    replaceVaultItem,
+    // replaceVault,
+    updateVault,
+} from "@controllers/vault.controller.js";
+import {
+    asRequestHandler,
+    authMiddleware,
+} from "@middlewares/auth.middleware.js";
+import { ensureVaultExistsMiddleware } from "@middlewares/ensureVaultExists.middleware.js";
 import { Router } from "express";
 
 export const vaultRouter: Router = Router();
 
-vaultRouter.use(verifyTokenMiddleware);
+vaultRouter.use(authMiddleware);
+vaultRouter
+    .route("/")
+    .get(asRequestHandler(getVault))
+    .post(asRequestHandler(createVault))
+    // .put(asRequestHandler(replaceVault))
+    .patch(asRequestHandler(updateVault));
 
-vaultRouter.post("/", getVault);
-vaultRouter.put("/sync", updateVault);
+vaultRouter.use(ensureVaultExistsMiddleware);
+vaultRouter.post("/items", asRequestHandler(createVaultItem));
+vaultRouter
+    .route("/item/:id")
+    .get(asRequestHandler(getVaultItem))
+    .put(asRequestHandler(replaceVaultItem))
+    .delete(asRequestHandler(deleteVaultItem));

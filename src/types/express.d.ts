@@ -1,6 +1,6 @@
-import type { Payload } from "@services/auth.ts";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { IUser } from "@models/user.model.ts";
 import type { Request } from "express";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 // older approach, both works
 // declare global {
@@ -13,6 +13,6 @@ import type { Request } from "express";
 
 declare module "express" {
     interface Request {
-        payload?: Payload;
+        user?: IUser;
     }
 }
