@@ -85,6 +85,13 @@ export async function createVaultItem(
     if (!item || !item.id || !item.ciphertext || !item.nonce)
         throw new ServerError("Invalid vault item", StatusCodes.BAD_REQUEST);
 
+    const index = req.user.vault.items.findIndex((i) => i.id === item.id);
+    if (index !== -1)
+        throw new ServerError(
+            "Vault item already exists",
+            StatusCodes.CONFLICT,
+        );
+
     req.user.vault.items.push(item);
     await req.user.save();
 
