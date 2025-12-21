@@ -4,6 +4,7 @@ import {
     deleteVaultItem,
     getVault,
     getVaultItem,
+    replaceVault,
     replaceVaultItem,
     // replaceVault,
     updateVault,
@@ -22,13 +23,13 @@ vaultRouter
     .route("/")
     .get(asRequestHandler(getVault))
     .post(asRequestHandler(createVault))
-    // .put(asRequestHandler(replaceVault))
+    .put(asRequestHandler(replaceVault))
     .patch(asRequestHandler(updateVault));
 
 vaultRouter.use(ensureVaultExistsMiddleware);
 vaultRouter.post("/items", asRequestHandler(createVaultItem));
 vaultRouter
-    .route("/item/:id")
+    .route("/items/:id")
     .get(asRequestHandler(getVaultItem))
     .put(asRequestHandler(replaceVaultItem))
     .delete(asRequestHandler(deleteVaultItem));
