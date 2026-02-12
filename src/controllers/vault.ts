@@ -56,7 +56,7 @@ export class VaultController {
         const user = req.user;
         if (!user.vault)
             throw new ServerError(
-                "Vault doesn't exsist, please create a new vault",
+                "Vault doesn't exist, please create a new vault",
                 StatusCodes.NOT_FOUND,
             );
 
@@ -79,7 +79,7 @@ export class VaultController {
         const user = req.user;
         if (!user.vault)
             throw new ServerError(
-                "Vault doesn't exsist, please create a new vault",
+                "Vault doesn't exist, please create a new vault",
                 StatusCodes.NOT_FOUND,
             );
 

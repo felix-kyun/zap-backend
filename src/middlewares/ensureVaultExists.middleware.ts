@@ -9,7 +9,7 @@ export function ensureVaultExistsMiddleware(
 ) {
     if (!req.user?.vault)
         throw new ServerError(
-            "Vault doesn't exsist, please create a new vault",
+            "Vault doesn't exist, please create a new vault",
             StatusCodes.NOT_FOUND,
         );
 
