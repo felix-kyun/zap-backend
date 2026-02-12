@@ -13,7 +13,7 @@ export interface IVault {
     };
     settings: unknown;
     unlock: unknown;
-    items: Array<IVaultItem>;
+    items: IVaultItem[];
     createdAt: Date;
     updatedAt: Date;
 }

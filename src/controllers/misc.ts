@@ -1,0 +1,63 @@
+import { Controller, Get } from "@felix-kyun/file-router";
+import { redis } from "@utils/database/redis.js";
+import { timed } from "@utils/timed.js";
+import type { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
+
+type Status = "ok" | "error";
+interface HealthCheckResponse {
+    status: Status;
+    uptime: number;
+    timestamp: string;
+    db: { name: string; status: Status }[];
+}
+
+@Controller()
+export class MiscController {
+    @Get("/csrf")
+    setCsrfToken(_req: Request, res: Response) {
+        res.status(StatusCodes.OK).json({
+            message: "CSRF token set",
+        });
+    }
+
+    @Get("/health")
+    async healthCheck(
+        _req: Request,
+        res: Response<HealthCheckResponse>,
+    ): Promise<void> {
+        const db: HealthCheckResponse["db"] = [];
+
+        // mongo
+        try {
+            if (mongoose.connection.readyState === 1) {
+                db.push({ name: "mongo", status: "ok" });
+            } else throw new Error("MongoDB not connected");
+        } catch {
+            db.push({ name: "mongo", status: "error" });
+        }
+
+        // redis
+        try {
+            const pong = await timed(() => redis.ping(), 1000);
+            if (pong === "PONG") {
+                db.push({ name: "redis", status: "ok" });
+            } else throw new Error("Redis not connected");
+        } catch {
+            db.push({ name: "redis", status: "error" });
+        }
+
+        const status: Status = db.every((e) => e.status === "ok")
+            ? "ok"
+            : "error";
+        const statusCode: number = status === "ok" ? 200 : 500;
+
+        res.status(statusCode).json({
+            status,
+            uptime: process.uptime(),
+            timestamp: new Date().toISOString(),
+            db,
+        });
+    }
+}

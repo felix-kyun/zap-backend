@@ -1,6 +1,7 @@
 import { AuthSchema, type IAuth } from "@models/auth.schema.js";
 import { Document, Model, model, Schema, Types } from "mongoose";
-import { VaultSchema, type IVault } from "./vault.schema.js";
+
+import { type IVault, VaultSchema } from "./vault.schema.js";
 
 export interface IUser extends Document {
     _id: Types.ObjectId;

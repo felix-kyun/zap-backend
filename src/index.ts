@@ -1,17 +1,11 @@
 import { ENV, PORT } from "@config";
+import { FileRouter } from "@felix-kyun/file-router";
 import { logger } from "@logger";
-import { csrf, verifyCsrf } from "@middlewares/csrf.middleware.js";
+import { csrf } from "@middlewares/csrf.middleware.js";
 import { errorHandler } from "@middlewares/error.middleware.js";
 import { loggerMiddleware } from "@middlewares/logger.middleware.js";
 import { notFoundMiddleware } from "@middlewares/notFound.middleware.js";
-import { authRouter } from "@routes/auth.routes.js";
-import { csrfRouter } from "@routes/csrf.routes.js";
 import { debugRouter } from "@routes/debug.routes.js";
-import { healthCheckRouter } from "@routes/health.routes.js";
-import { loginRouter } from "@routes/login.routes.js";
-import { oauthRouter } from "@routes/oauth.routes.js";
-import { registerRouter } from "@routes/register.routes.js";
-import { vaultRouter } from "@routes/vault.routes.js";
 import { connectMongo } from "@utils/database/mongo.js";
 import { connectRedis } from "@utils/database/redis.js";
 import cookieParser from "cookie-parser";
@@ -31,14 +25,7 @@ app.use(helmet());
 app.use(express.json());
 
 /* Routes */
-app.use("/api/health", healthCheckRouter);
-app.use("/api/csrf", csrfRouter);
-app.use(verifyCsrf());
-app.use("/api/register", registerRouter);
-app.use("/api/login", loginRouter);
-app.use("/api/oauth", oauthRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/vault", vaultRouter);
+app.use("/api", await FileRouter("src/controllers"));
 
 /* Testing Routes */
 if (["development", "test"].includes(ENV)) app.use("/api/debug", debugRouter);
