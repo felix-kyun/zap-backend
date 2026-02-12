@@ -25,7 +25,7 @@ app.use(helmet());
 app.use(express.json());
 
 /* Routes */
-app.use("/api", await FileRouter("src/controllers"));
+app.use("/api", await FileRouter("controllers", import.meta.url));
 
 /* Testing Routes */
 if (["development", "test"].includes(ENV)) app.use("/api/debug", debugRouter);
