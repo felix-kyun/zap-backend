@@ -31,7 +31,7 @@ interface CurrentUserResponse {
 export class AuthController {
     @Post("/logout")
     async logout(req: Request, res: Response<LogoutResponse>): Promise<void> {
-        const refreshToken = String(req.cookies.refreshToken);
+        const refreshToken = req?.cookies?.refreshToken as string | undefined;
 
         if (refreshToken) {
             await redis.del(`refresh:${refreshToken}`);
@@ -45,7 +45,7 @@ export class AuthController {
 
     @Post("/refresh")
     async refresh(req: Request, res: Response<RefreshResponse>): Promise<void> {
-        const refreshToken = String(req.cookies.refreshToken);
+        const refreshToken = req?.cookies?.refreshToken as string | undefined;
 
         if (!refreshToken)
             throw new ServerError(

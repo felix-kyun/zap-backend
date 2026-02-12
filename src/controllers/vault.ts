@@ -152,14 +152,15 @@ export class VaultItemController {
         req: AuthenticatedRequest<{ id: string }, unknown, IVaultItem, unknown>,
         res: Response<IVaultItem>,
     ) {
+        const id = req.params.id;
         const item = req.body;
-        if (!item?.id || !item.ciphertext || !item.nonce)
+        if (!id || !item?.id || !item.ciphertext || !item.nonce)
             throw new ServerError(
                 "Invalid vault item",
                 StatusCodes.BAD_REQUEST,
             );
 
-        const index = req.user.vault.items.findIndex((i) => i.id === item.id);
+        const index = req.user.vault.items.findIndex((i) => i.id === id);
         if (index === -1)
             throw new ServerError(
                 "Vault item not found",
