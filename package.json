@@ -35,7 +35,7 @@
     "license": "ISC",
     "packageManager": "pnpm@10.15.0",
     "dependencies": {
-        "@felix-kyun/file-router": "^1.1.1",
+        "@felix-kyun/file-router": "^1.1.3",
         "@redis/client": "^5.10.0",
         "@serenity-kit/opaque": "^0.9.0",
         "cookie-parser": "^1.4.7",

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@felix-kyun/file-router':
-        specifier: ^1.1.1
-        version: 1.1.1(typescript@5.9.3)
+        specifier: ^1.1.3
+        version: 1.1.3(typescript@5.9.3)
       '@redis/client':
         specifier: ^5.10.0
         version: 5.10.0
@@ -353,8 +353,8 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@felix-kyun/file-router@1.1.1':
-    resolution: {integrity: sha512-b1r36IK1Bm8HESxW306/TYWGsLeALM3TxcFpIRGwC1uJEuhu6i78Wwy8vYI3MFWNN0cAf2XbJ/Cw/p8OY3Ygqw==}
+  '@felix-kyun/file-router@1.1.3':
+    resolution: {integrity: sha512-Qxlpeqd8HY0Ae+m83t/FQZ3cx1CrOzWFqbf8SxahhKPMH6R0nHB7U7tBZ3FTz7B2FLtxPBubiC5l/+sdgLrr6A==}
     peerDependencies:
       typescript: ^5.9.3
 
@@ -2645,7 +2645,7 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@felix-kyun/file-router@1.1.1(typescript@5.9.3)':
+  '@felix-kyun/file-router@1.1.3(typescript@5.9.3)':
     dependencies:
       debug: 4.4.3
       express: 5.2.1
