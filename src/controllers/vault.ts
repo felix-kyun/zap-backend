@@ -17,8 +17,7 @@ import { StatusCodes } from "http-status-codes";
 
 import type { AuthenticatedRequest } from "@/types/request.js";
 
-@Middleware(authMiddleware)
-@Middleware(verifyCsrf())
+@Middleware(verifyCsrf(), authMiddleware)
 @Controller("/vault")
 export class VaultController {
     @Get()
