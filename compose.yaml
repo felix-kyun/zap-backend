@@ -12,6 +12,8 @@ services:
         depends_on:
             - mongo
             - redis
+        environment:
+            - DEBUG
     mongo:
         image: mongo:7
         ports:

@@ -50,7 +50,8 @@
         "useDefineForClassFields": true,
         "moduleDetection": "force",
         "skipLibCheck": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "experimentalDecorators": true
     },
     "exclude": ["dist/", "frontend/", "tests/", "node_modules/"]
 }
