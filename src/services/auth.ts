@@ -1,6 +1,6 @@
 import { JWT_REFRESH_SECRET, JWT_SECRET } from "@config";
-import type { IUser } from "@models/user.model.js";
-import { redis } from "@utils/database/redis.js";
+import type { IUser } from "@/models/user.model.js";
+import { redis } from "@/utils/database/redis.js";
 import jwt from "jsonwebtoken";
 import type mongoose from "mongoose";
 

@@ -1,9 +1,9 @@
-import { ServerError } from "@errors/ServerError.error.js";
+import { ServerError } from "@/errors/ServerError.error.js";
 import { Controller, Middleware, Post } from "@felix-kyun/file-router";
-import { verifyCsrf } from "@middlewares/csrf.middleware.js";
-import { User } from "@models/user.model.js";
-import Opaque from "@services/opaque.js";
-import { generateOTP, verifyOTP } from "@services/otp.js";
+import { verifyCsrf } from "@/middlewares/csrf.middleware.js";
+import { User } from "@/models/user.model.js";
+import Opaque from "@/services/opaque.js";
+import { generateOTP, verifyOTP } from "@/services/otp.js";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 

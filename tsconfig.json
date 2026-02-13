@@ -9,14 +9,6 @@
 		"paths": {
 			"@logger": ["utils/logger/logger.js"],
 			"@config": ["utils/config/config.js"],
-			"@utils/*": ["utils/*"],
-			"@errors/*": ["errors/*"],
-			"@middlewares/*": ["middlewares/*"],
-			"@controllers/*": ["controllers/*"],
-			"@routes/*": ["routes/*"],
-			"@models/*": ["models/*"],
-			"@services/*": ["services/*"],
-			"@types/*": ["types/*"],
 			"@/*": ["*"]
 		},
 

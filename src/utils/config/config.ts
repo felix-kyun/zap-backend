@@ -1,4 +1,4 @@
-import { parseNumber } from "@utils/parseNumber.js";
+import { parseNumber } from "@/utils/parseNumber.js";
 import { config } from "dotenv";
 
 // __dirname resolves to project root

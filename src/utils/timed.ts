@@ -1,4 +1,4 @@
-import { createTimed } from "@utils/createTimed.js";
+import { createTimed } from "@/utils/createTimed.js";
 
 export function timed<T>(
 	fn: () => T | Promise<T>,

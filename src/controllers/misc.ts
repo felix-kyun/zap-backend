@@ -1,6 +1,6 @@
 import { Controller, Get } from "@felix-kyun/file-router";
-import { redis } from "@utils/database/redis.js";
-import { timed } from "@utils/timed.js";
+import { redis } from "@/utils/database/redis.js";
+import { timed } from "@/utils/timed.js";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";

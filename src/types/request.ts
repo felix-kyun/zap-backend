@@ -1,4 +1,4 @@
-import type { IUser } from "@models/user.model.js";
+import type { IUser } from "@/models/user.model.js";
 import type { Request, Response } from "express";
 
 export interface AuthenticatedRequest<

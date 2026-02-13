@@ -1,4 +1,4 @@
-import { AuthSchema, type IAuth } from "@models/auth.schema.js";
+import { AuthSchema, type IAuth } from "@/models/auth.schema.js";
 import { type Document, type Model, model, Schema, type Types } from "mongoose";
 
 import { type IVault, VaultSchema } from "./vault.schema.js";

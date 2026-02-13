@@ -1,10 +1,10 @@
 import { ENV } from "@config";
-import type { IUser } from "@models/user.model.js";
+import type { IUser } from "@/models/user.model.js";
 import {
 	generateAccessTokenFromUser,
 	generateRefreshToken,
-} from "@services/auth.js";
-import { generateSessionId } from "@utils/generateSessionId.js";
+} from "@/services/auth.js";
+import { generateSessionId } from "@/utils/generateSessionId.js";
 import type { Response } from "express";
 
 export async function attachLoginCookies(user: IUser, res: Response) {

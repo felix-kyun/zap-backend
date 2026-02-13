@@ -1,4 +1,4 @@
-import type { IUser } from "@models/user.model.ts";
+import type { IUser } from "@/models/user.model.ts";
 // biome-ignore lint: required for declaration
 import type { Request } from "express";
 

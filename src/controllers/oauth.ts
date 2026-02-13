@@ -1,10 +1,10 @@
 import { GOOGLE_CLIENT_ID } from "@config";
-import { BadRequestError } from "@errors/BadRequestError.error.js";
-import { ServerError } from "@errors/ServerError.error.js";
+import { BadRequestError } from "@/errors/BadRequestError.error.js";
+import { ServerError } from "@/errors/ServerError.error.js";
 import { Controller, Middleware, Post } from "@felix-kyun/file-router";
-import { verifyCsrf } from "@middlewares/csrf.middleware.js";
-import { User } from "@models/user.model.js";
-import { attachLoginCookies } from "@utils/attachLoginCookies.js";
+import { verifyCsrf } from "@/middlewares/csrf.middleware.js";
+import { User } from "@/models/user.model.js";
+import { attachLoginCookies } from "@/utils/attachLoginCookies.js";
 import type { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
 import { StatusCodes } from "http-status-codes";

@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { __dirname, ENV, LOG_LEVEL, LOGFILE } from "@config";
-import { logFileTransport } from "@utils/logger/logFileTransport.js";
+import { logFileTransport } from "@/utils/logger/logFileTransport.js";
 import pino, {
 	type Logger,
 	type LoggerOptions,

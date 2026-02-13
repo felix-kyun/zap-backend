@@ -1,6 +1,6 @@
-import { ServerError } from "@errors/ServerError.error.js";
-import { User } from "@models/user.model.js";
-import { verifyAccessToken } from "@services/auth.js";
+import { ServerError } from "@/errors/ServerError.error.js";
+import { User } from "@/models/user.model.js";
+import { verifyAccessToken } from "@/services/auth.js";
 import type { NextFunction, Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
