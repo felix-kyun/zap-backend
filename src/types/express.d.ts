@@ -1,4 +1,5 @@
 import type { IUser } from "@models/user.model.ts";
+// biome-ignore lint: required for declaration
 import type { Request } from "express";
 
 // older approach, both works
@@ -11,7 +12,7 @@ import type { Request } from "express";
 // }
 
 declare module "express" {
-    interface Request {
-        user?: IUser;
-    }
+	interface Request {
+		user?: IUser;
+	}
 }

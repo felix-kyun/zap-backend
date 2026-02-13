@@ -3,15 +3,15 @@ import type { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 export function ensureVaultExistsMiddleware(
-    req: Request,
-    _res: Response,
-    next: NextFunction,
+	req: Request,
+	_res: Response,
+	next: NextFunction,
 ) {
-    if (!req.user?.vault)
-        throw new ServerError(
-            "Vault doesn't exist, please create a new vault",
-            StatusCodes.NOT_FOUND,
-        );
+	if (!req.user?.vault)
+		throw new ServerError(
+			"Vault doesn't exist, please create a new vault",
+			StatusCodes.NOT_FOUND,
+		);
 
-    next();
+	next();
 }

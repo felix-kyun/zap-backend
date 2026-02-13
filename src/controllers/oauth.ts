@@ -12,7 +12,7 @@ import { StatusCodes } from "http-status-codes";
 import type { LoginResponse } from "@/types/login.types.js";
 
 interface GoogleLoginRequest {
-    idToken: string;
+	idToken: string;
 }
 
 const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
@@ -20,47 +20,47 @@ const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
 @Middleware(verifyCsrf())
 @Controller("/oauth")
 export class OAuthController {
-    @Post("/google")
-    async google(
-        req: Request<unknown, unknown, GoogleLoginRequest>,
-        res: Response<LoginResponse>,
-    ) {
-        const { idToken } = req.body;
+	@Post("/google")
+	async google(
+		req: Request<unknown, unknown, GoogleLoginRequest>,
+		res: Response<LoginResponse>,
+	) {
+		const { idToken } = req.body;
 
-        if (!idToken) throw new BadRequestError();
+		if (!idToken) throw new BadRequestError();
 
-        const ticket = await googleClient.verifyIdToken({
-            idToken,
-        });
+		const ticket = await googleClient.verifyIdToken({
+			idToken,
+		});
 
-        const payload = ticket.getPayload();
+		const payload = ticket.getPayload();
 
-        if (!payload?.email || !payload?.sub)
-            throw new ServerError(
-                "Invalid Google ID token",
-                StatusCodes.UNAUTHORIZED,
-            );
+		if (!payload?.email || !payload?.sub)
+			throw new ServerError(
+				"Invalid Google ID token",
+				StatusCodes.UNAUTHORIZED,
+			);
 
-        const email = payload.email;
-        const username = payload.name ?? email.split("@")[0] ?? "User";
+		const email = payload.email;
+		const username = payload.name ?? email.split("@")[0] ?? "User";
 
-        let user = await User.findOne({ email });
+		let user = await User.findOne({ email });
 
-        user ??= await User.create({
-            email,
-            username,
-            auth: {
-                type: "google",
-                data: payload.sub,
-            },
-        });
+		user ??= await User.create({
+			email,
+			username,
+			auth: {
+				type: "google",
+				data: payload.sub,
+			},
+		});
 
-        await attachLoginCookies(user, res);
+		await attachLoginCookies(user, res);
 
-        res.status(StatusCodes.OK).json({
-            id: user._id.toString(),
-            username,
-            email,
-        });
-    }
+		res.status(StatusCodes.OK).json({
+			id: user._id.toString(),
+			username,
+			email,
+		});
+	}
 }

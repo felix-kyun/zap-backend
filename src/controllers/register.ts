@@ -8,93 +8,87 @@ import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 interface RegistrationStartRequest {
-    email: string;
-    request: string;
+	email: string;
+	request: string;
 }
 
 interface RegistrationStartResponse {
-    response: string;
+	response: string;
 }
 
 interface RegistrationFinishRequest {
-    username: string;
-    email: string;
-    otp: string;
-    record: string;
+	username: string;
+	email: string;
+	otp: string;
+	record: string;
 }
 
 @Middleware(verifyCsrf())
 @Controller("/register")
 export class RegisterController {
-    @Post("/start")
-    async start(
-        req: Request<
-            unknown,
-            RegistrationStartResponse,
-            RegistrationStartRequest,
-            unknown
-        >,
-        res: Response<RegistrationStartResponse>,
-    ) {
-        const { email, request } = req.body;
+	@Post("/start")
+	async start(
+		req: Request<
+			unknown,
+			RegistrationStartResponse,
+			RegistrationStartRequest,
+			unknown
+		>,
+		res: Response<RegistrationStartResponse>,
+	) {
+		const { email, request } = req.body;
 
-        if (!email || !request)
-            throw new ServerError(
-                "Missing required fields",
-                StatusCodes.BAD_REQUEST,
-            );
+		if (!email || !request)
+			throw new ServerError("Missing required fields", StatusCodes.BAD_REQUEST);
 
-        const existingUser = await User.findOne({
-            email,
-        });
+		const existingUser = await User.findOne({
+			email,
+		});
 
-        if (existingUser && existingUser.email === email)
-            throw new ServerError("Email already exists", StatusCodes.CONFLICT);
+		if (existingUser && existingUser.email === email)
+			throw new ServerError("Email already exists", StatusCodes.CONFLICT);
 
-        await generateOTP(email);
+		await generateOTP(email);
 
-        const response = Opaque.startRegistration(email, request);
+		const response = Opaque.startRegistration(email, request);
 
-        res.status(StatusCodes.OK).json({
-            response,
-        });
-    }
+		res.status(StatusCodes.OK).json({
+			response,
+		});
+	}
 
-    @Post("/finish")
-    async registerFinish(
-        req: Request<unknown, unknown, RegistrationFinishRequest, unknown>,
-        res: Response,
-    ) {
-        const { username, email, record, otp } = req.body;
+	@Post("/finish")
+	async registerFinish(
+		req: Request<unknown, unknown, RegistrationFinishRequest, unknown>,
+		res: Response,
+	) {
+		const { username, email, record, otp } = req.body;
 
-        if (!username || !email || !record || !otp)
-            throw new ServerError(
-                "Missing required fields",
-                StatusCodes.BAD_REQUEST,
-            );
+		if (!username || !email || !record || !otp)
+			throw new ServerError("Missing required fields", StatusCodes.BAD_REQUEST);
 
-        const existingUser = await User.findOne({
-            email,
-        });
+		const existingUser = await User.findOne({
+			email,
+		});
 
-        if (existingUser && existingUser.email === email)
-            throw new ServerError("Email already exists", StatusCodes.CONFLICT);
+		if (existingUser && existingUser.email === email)
+			throw new ServerError("Email already exists", StatusCodes.CONFLICT);
 
-        await verifyOTP(email, otp);
+		await verifyOTP(email, otp);
 
-        const user = await User.create({
-            username,
-            email,
-            auth: {
-                type: "opaque",
-                data: record,
-            },
-        });
+		const user = await User.create({
+			username,
+			email,
+			auth: {
+				type: "opaque",
+				data: record,
+			},
+		});
 
-        res.status(StatusCodes.CREATED).json({
-            id: user._id,
-            username: user.username,
-            email: user.email,
-        });
-    }
+		res.status(StatusCodes.CREATED).json({
+			id: user._id,
+			username: user.username,
+			email: user.email,
+		});
+	}
 }

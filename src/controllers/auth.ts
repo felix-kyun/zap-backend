@@ -4,125 +4,118 @@ import { Controller, Middleware, Post } from "@felix-kyun/file-router";
 import { verifyCsrf } from "@middlewares/csrf.middleware.js";
 import { User } from "@models/user.model.js";
 import {
-    generateAccessToken,
-    verifyAccessToken,
-    verifyRefreshToken,
+	generateAccessToken,
+	verifyAccessToken,
+	verifyRefreshToken,
 } from "@services/auth.js";
 import { redis } from "@utils/database/redis.js";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 interface LogoutResponse {
-    message: string;
+	message: string;
 }
 
 interface RefreshResponse {
-    token: string;
+	token: string;
 }
 
 interface CurrentUserResponse {
-    id: string;
-    email: string;
-    username: string;
+	id: string;
+	email: string;
+	username: string;
 }
 
 @Middleware(verifyCsrf())
 @Controller("/auth")
 export class AuthController {
-    @Post("/logout")
-    async logout(req: Request, res: Response<LogoutResponse>): Promise<void> {
-        const refreshToken = req?.cookies?.refreshToken as string | undefined;
+	@Post("/logout")
+	async logout(req: Request, res: Response<LogoutResponse>): Promise<void> {
+		const refreshToken = req?.cookies?.refreshToken as string | undefined;
 
-        if (refreshToken) {
-            await redis.del(`refresh:${refreshToken}`);
-            res.clearCookie("refreshToken");
-            res.clearCookie("accessToken");
-            res.clearCookie("authenticated");
-        }
+		if (refreshToken) {
+			await redis.del(`refresh:${refreshToken}`);
+			res.clearCookie("refreshToken");
+			res.clearCookie("accessToken");
+			res.clearCookie("authenticated");
+		}
 
-        res.status(StatusCodes.OK).json({ message: "Logged out successfully" });
-    }
+		res.status(StatusCodes.OK).json({ message: "Logged out successfully" });
+	}
 
-    @Post("/refresh")
-    async refresh(req: Request, res: Response<RefreshResponse>): Promise<void> {
-        const refreshToken = req?.cookies?.refreshToken as string | undefined;
+	@Post("/refresh")
+	async refresh(req: Request, res: Response<RefreshResponse>): Promise<void> {
+		const refreshToken = req?.cookies?.refreshToken as string | undefined;
 
-        if (!refreshToken)
-            throw new ServerError(
-                "No refresh token provided",
-                StatusCodes.UNAUTHORIZED,
-            );
+		if (!refreshToken)
+			throw new ServerError(
+				"No refresh token provided",
+				StatusCodes.UNAUTHORIZED,
+			);
 
-        const payload = await verifyRefreshToken(refreshToken);
+		const payload = await verifyRefreshToken(refreshToken);
 
-        if (!payload)
-            throw new ServerError(
-                "Invalid refresh token",
-                StatusCodes.UNAUTHORIZED,
-            );
+		if (!payload)
+			throw new ServerError("Invalid refresh token", StatusCodes.UNAUTHORIZED);
 
-        const accessToken = generateAccessToken(payload);
+		const accessToken = generateAccessToken(payload);
 
-        res.cookie("accessToken", accessToken, {
-            httpOnly: true,
-            secure: ENV === "production",
-            sameSite: "strict",
-            maxAge: 15 * 60 * 1000, // 15 minutes
-        });
+		res.cookie("accessToken", accessToken, {
+			httpOnly: true,
+			secure: ENV === "production",
+			sameSite: "strict",
+			maxAge: 15 * 60 * 1000, // 15 minutes
+		});
 
-        res.cookie("authenticated", "true", {
-            httpOnly: false,
-            secure: ENV === "production",
-            sameSite: "strict",
-            path: "/",
-            maxAge: 15 * 60 * 1000, // 15 minutes
-        });
+		res.cookie("authenticated", "true", {
+			httpOnly: false,
+			secure: ENV === "production",
+			sameSite: "strict",
+			path: "/",
+			maxAge: 15 * 60 * 1000, // 15 minutes
+		});
 
-        res.status(StatusCodes.OK).json({ token: accessToken });
-    }
+		res.status(StatusCodes.OK).json({ token: accessToken });
+	}
 
-    @Post("/status")
-    AuthStatus(req: Request, res: Response<{ authenticated: boolean }>): void {
-        const accessToken = req.cookies.accessToken as string;
+	@Post("/status")
+	AuthStatus(req: Request, res: Response<{ authenticated: boolean }>): void {
+		const accessToken = req.cookies.accessToken as string;
 
-        if (!accessToken || !verifyAccessToken(accessToken)) {
-            res.status(StatusCodes.UNAUTHORIZED).json({ authenticated: false });
-            return;
-        }
+		if (!accessToken || !verifyAccessToken(accessToken)) {
+			res.status(StatusCodes.UNAUTHORIZED).json({ authenticated: false });
+			return;
+		}
 
-        res.status(StatusCodes.OK).json({ authenticated: true });
-    }
+		res.status(StatusCodes.OK).json({ authenticated: true });
+	}
 
-    @Post("/me")
-    async getCurrentUser(
-        req: Request,
-        res: Response<CurrentUserResponse>,
-    ): Promise<void> {
-        const accessToken = req.cookies.accessToken as string;
+	@Post("/me")
+	async getCurrentUser(
+		req: Request,
+		res: Response<CurrentUserResponse>,
+	): Promise<void> {
+		const accessToken = req.cookies.accessToken as string;
 
-        if (!accessToken)
-            throw new ServerError(
-                "No access token provided",
-                StatusCodes.UNAUTHORIZED,
-            );
+		if (!accessToken)
+			throw new ServerError(
+				"No access token provided",
+				StatusCodes.UNAUTHORIZED,
+			);
 
-        const payload = verifyAccessToken(accessToken);
+		const payload = verifyAccessToken(accessToken);
 
-        if (!payload)
-            throw new ServerError(
-                "Invalid access token",
-                StatusCodes.UNAUTHORIZED,
-            );
+		if (!payload)
+			throw new ServerError("Invalid access token", StatusCodes.UNAUTHORIZED);
 
-        const user = await User.findById(payload.id).exec();
+		const user = await User.findById(payload.id).exec();
 
-        if (!user)
-            throw new ServerError("User not found", StatusCodes.NOT_FOUND);
+		if (!user) throw new ServerError("User not found", StatusCodes.NOT_FOUND);
 
-        res.status(StatusCodes.OK).json({
-            id: user._id.toString(),
-            email: user.email,
-            username: user.username,
-        });
-    }
+		res.status(StatusCodes.OK).json({
+			id: user._id.toString(),
+			email: user.email,
+			username: user.username,
+		});
+	}
 }
