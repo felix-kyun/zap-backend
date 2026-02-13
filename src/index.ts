@@ -42,8 +42,8 @@ await connectRedis();
 
 /* Start Server */
 if (ENV !== "test")
-    app.listen(PORT, () => {
-        logger.info(`Server started on port ${PORT}`);
-    });
+	app.listen(PORT, () => {
+		logger.info(`Server started on port ${PORT}`);
+	});
 
 export default app;

@@ -4,9 +4,9 @@ import { StatusCodes } from "http-status-codes";
 import { ServerError } from "@/errors/ServerError.error.js";
 
 export function notFoundMiddleware(
-    _req: Request,
-    _res: Response,
-    _next: NextFunction,
+	_req: Request,
+	_res: Response,
+	_next: NextFunction,
 ): void {
-    throw new ServerError("Not Found", StatusCodes.NOT_FOUND);
+	throw new ServerError("Not Found", StatusCodes.NOT_FOUND);
 }

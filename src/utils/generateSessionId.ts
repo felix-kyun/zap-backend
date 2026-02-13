@@ -1,5 +1,5 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 export function generateSessionId(): string {
-    return crypto.randomBytes(48).toString("base64url");
+	return crypto.randomBytes(48).toString("base64url");
 }
