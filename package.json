@@ -4,6 +4,11 @@
 	"description": "A simple and secure password manager. (Backend)",
 	"main": "index.js",
 	"type": "module",
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx}": [
+			"biome check --write"
+		]
+	},
 	"scripts": {
 		"start": "node dist/index.js",
 		"dev": "tsx watch src/index.ts",
@@ -64,6 +69,7 @@
 		"@types/supertest": "^6.0.3",
 		"globals": "^16.5.0",
 		"husky": "^9.1.7",
+		"lint-staged": "^16.2.7",
 		"supertest": "^7.2.2",
 		"tsc-alias": "^1.8.16",
 		"tsup": "^8.5.1",
