@@ -10,11 +10,11 @@ import { connectMongo } from "@/utils/database/mongo.js";
 import { connectRedis } from "@/utils/database/redis.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express, { type Express } from "express";
+import express from "express";
 import helmet from "helmet";
 
 logger.info("Starting server...");
-const app: Express = express();
+const app = express();
 
 /* Middleware */
 app.use(loggerMiddleware);
