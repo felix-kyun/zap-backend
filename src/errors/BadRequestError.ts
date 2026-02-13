@@ -1,4 +1,4 @@
-import { ServerError } from "@/errors/ServerError.error.js";
+import { ServerError } from "@/errors/ServerError.js";
 import { StatusCodes } from "http-status-codes";
 
 export class BadRequestError extends ServerError {

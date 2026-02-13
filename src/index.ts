@@ -1,11 +1,11 @@
 import { ENV, PORT } from "@config";
 import { FileRouter } from "@felix-kyun/file-router";
 import { logger } from "@logger";
-import { csrf } from "@/middlewares/csrf.middleware.js";
-import { errorHandler } from "@/middlewares/error.middleware.js";
-import { loggerMiddleware } from "@/middlewares/logger.middleware.js";
-import { notFoundMiddleware } from "@/middlewares/notFound.middleware.js";
-import { debugRouter } from "@/routes/debug.routes.js";
+import { csrf } from "@/middlewares/csrf.js";
+import { errorHandler } from "@/middlewares/error.js";
+import { loggerMiddleware } from "@/middlewares/logger.js";
+import { notFoundMiddleware } from "@/middlewares/notFound.js";
+import { debugRouter } from "@/routes/debug.js";
 import { connectMongo } from "@/utils/database/mongo.js";
 import { connectRedis } from "@/utils/database/redis.js";
 import cookieParser from "cookie-parser";

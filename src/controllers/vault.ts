@@ -1,4 +1,4 @@
-import { ServerError } from "@/errors/ServerError.error.js";
+import { ServerError } from "@/errors/ServerError.js";
 import {
 	Controller,
 	Delete,
@@ -8,9 +8,9 @@ import {
 	Post,
 	Put,
 } from "@felix-kyun/file-router";
-import { authMiddleware } from "@/middlewares/auth.middleware.js";
-import { verifyCsrf } from "@/middlewares/csrf.middleware.js";
-import { ensureVaultExistsMiddleware } from "@/middlewares/ensureVaultExists.middleware.js";
+import { authMiddleware } from "@/middlewares/auth.js";
+import { verifyCsrf } from "@/middlewares/csrf.js";
+import { ensureVaultExistsMiddleware } from "@/middlewares/ensureVaultExists.js";
 import type { IVault, IVaultItem } from "@/models/vault.schema.js";
 import type { Response } from "express";
 import { StatusCodes } from "http-status-codes";

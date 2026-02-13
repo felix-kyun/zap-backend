@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { ServerError } from "@/errors/ServerError.error.js";
+import { ServerError } from "@/errors/ServerError.js";
 
 export function notFoundMiddleware(
 	_req: Request,

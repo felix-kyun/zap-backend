@@ -1,5 +1,5 @@
 import { ENV } from "@config";
-import { ServerError } from "@/errors/ServerError.error.js";
+import { ServerError } from "@/errors/ServerError.js";
 import { logger } from "@logger";
 import type { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
