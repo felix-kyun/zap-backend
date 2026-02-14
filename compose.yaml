@@ -10,20 +10,24 @@ services:
             - /app/node_modules
         command: pnpm dev
         depends_on:
-            - mongo
+            - postgres
             - redis
         environment:
             - DEBUG
-    mongo:
-        image: mongo:7
+    postgres:
+        image: postgres:18
         ports:
-            - "27017:27017"
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER:-postgres}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+            - POSTGRES_DB=${POSTGRES_DB:-postgres}
         volumes:
-            - mongo-data:/data/db
+            - postgres_data:/var/lib/postgresql
     redis:
         image: redis:7
         ports:
             - "6379:6379"
 
 volumes:
-    mongo-data:
+    postgres_data:
