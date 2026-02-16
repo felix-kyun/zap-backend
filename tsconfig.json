@@ -45,5 +45,5 @@
 		"esModuleInterop": true,
 		"experimentalDecorators": true
 	},
-	"exclude": ["dist/", "frontend/", "tests/", "node_modules/"]
+	"exclude": ["dist/", "frontend/", "tests/", "node_modules/", "*.config.ts", "*.config.js"]
 }
