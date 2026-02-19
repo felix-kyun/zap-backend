@@ -1,0 +1,170 @@
+// DBML for database design
+
+Project Citadel {
+    database_type: 'postgres'
+    Note: 'Secure password and credentials manager'
+}
+
+enum auth_type {
+  email
+  google
+} 
+
+Table users {
+  id            uuid [pk]
+  email         string [unique]
+  created_at    timestamp
+  // updated_at    timestamp
+  deleted_at    timestamp
+}
+
+Table new_users {
+  id          uuid [pk]
+  email       string [unique]
+  otp         text
+  created_at  timestamp
+}
+
+Table auth {
+  user_id uuid [pk, ref: - users.id]
+  type    auth_type
+  data    text
+}
+
+Table keys {
+  user_id               uuid [pk, ref: - users.id]
+  public_key            text
+  encrypted_private_key text
+}
+
+Table profile {
+  user_id     uuid [pk, ref: - users.id]
+  name        text
+  avatar_url  text [default: 'path/to/default.png']
+  updated_at  timestamp
+}
+
+enum client_type {
+  web
+  mobile
+  cli
+}
+
+enum revoke_reason {
+  logout
+  logout_all
+  token_expire
+  unknown
+}
+
+Table sessions {
+  id              uuid [pk]
+  user_id         uuid [ref: > users.id]
+  hash            string [note: 'hash of refresh token']
+  type            client_type
+  user_agent      text
+  ip_address      inet
+  created_at      timestamp
+  expires_at      timestamp
+  last_active_at  timestamp
+  revoked_at      timestamp
+  revoked_reason  revoke_reason
+}
+
+Table vaults {
+  id uuid [pk]
+  user_id uuid [ref: > users.id]
+  revision integer
+  encrypted_name text
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp
+}
+
+Table folders {
+  id uuid [pk]
+  vault_id uuid [ref: > vaults.id]
+  encrypted_name text
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp
+}
+
+enum vault_item_type {
+  login
+  card
+  identity
+  totp
+  note
+  file
+}
+
+Table vault_items {
+  id uuid [pk]
+  vault_id uuid [ref: > vaults.id]
+  folder_id uuid [ref: > folders.id]
+  revision integer
+  type vault_item_type
+  encrypted_name text
+  encrypted_description text
+  favorite boolean
+  encrypted_data text
+  created_by uuid [ref: > users.id]
+  updated_by uuid [ref: > users.id]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp
+}
+
+enum vault_user_roles {
+  read
+  write
+  admin
+}
+
+Table vault_users {
+  vault_id uuid [ref: > vaults.id]
+  user_id uuid [ref: > users.id]
+  role vault_user_roles
+  key_envelope text
+  created_by uuid [ref: > users.id]
+  added_at timestamp
+
+  indexes {
+    (vault_id, user_id) [pk]
+  }
+}
+
+enum audit_action {
+  login
+  logout
+  item_created
+  item_modified
+  item_deleted
+  vault_created
+  vault_deleted
+  vault_shared
+  add_user
+  remove_user
+}
+
+Table audit_logs {
+  id serial [pk]
+  user_id uuid [ref: > users.id]
+  vault_id uuid [ref: > vaults.id]
+  item_id uuid [ref: > vault_items.id]
+  session_id uuid [ref: > sessions.id]
+  metadata jsonb
+  action audit_action
+  created_at timestamp
+}
+
+// todo
+// organization
+// shares
+// attachments and files
+// tags
+// mfa
+// shares
+// emergency accccess
+
