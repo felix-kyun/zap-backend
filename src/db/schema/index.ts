@@ -6,3 +6,5 @@ export * from "@/db/schema/profiles.js";
 export * from "@/db/schema/sessions.js";
 export * from "@/db/schema/vaults.js";
 export * from "@/db/schema/vaultItems.js";
+export * from "@/db/schema/folders.js";
+export * from "@/db/schema/vaultUsers.js";
