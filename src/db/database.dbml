@@ -76,6 +76,7 @@ Table vaults {
   user_id uuid [ref: > users.id]
   revision integer
   encrypted_name text
+  encrypted_key text
   created_at timestamp
   updated_at timestamp
   deleted_at timestamp
@@ -110,7 +111,6 @@ Table vault_items {
   favorite boolean
   encrypted_data text
   created_by uuid [ref: > users.id]
-  updated_by uuid [ref: > users.id]
   created_at timestamp
   updated_at timestamp
   deleted_at timestamp
