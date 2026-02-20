@@ -113,9 +113,7 @@ export function Modal({
 								{header ? (
 									header
 								) : (
-									<span className={`${titleClassName}`}>
-										{title}
-									</span>
+									<span className={`${titleClassName}`}>{title}</span>
 								)}
 								<div className="flex items-center gap-4 justify-between">
 									{options}

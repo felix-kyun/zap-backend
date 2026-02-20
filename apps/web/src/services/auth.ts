@@ -38,8 +38,7 @@ class AuthService {
 			email,
 		});
 
-		if (!initialResponse.ok)
-			throw new Error("Registration initiation failed");
+		if (!initialResponse.ok) throw new Error("Registration initiation failed");
 
 		const { response } = await initialResponse.json();
 
@@ -62,8 +61,7 @@ class AuthService {
 			otp,
 		});
 
-		if (!finalResponse.ok)
-			throw new Error("Registration completion failed");
+		if (!finalResponse.ok) throw new Error("Registration completion failed");
 
 		return true;
 	}

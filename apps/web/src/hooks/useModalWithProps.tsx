@@ -11,9 +11,7 @@ type RequiredModalProps = {
 };
 
 export function useModalWithProps<T extends object>(
-	Modal: ComponentType<
-		RequiredModalProps & Omit<T, keyof RequiredModalProps>
-	>,
+	Modal: ComponentType<RequiredModalProps & Omit<T, keyof RequiredModalProps>>,
 	{ onOpen, onClose }: UseModalProps = {},
 ) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);

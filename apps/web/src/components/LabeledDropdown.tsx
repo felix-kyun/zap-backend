@@ -71,14 +71,7 @@ export function LabeledDropdown<T extends string>({
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent<HTMLDivElement>, option: T, index: number) => {
 			if (
-				[
-					"Enter",
-					" ",
-					"Tab",
-					"ArrowDown",
-					"ArrowUp",
-					"Escape",
-				].includes(e.key)
+				["Enter", " ", "Tab", "ArrowDown", "ArrowUp", "Escape"].includes(e.key)
 			) {
 				e.preventDefault();
 				if (e.key === "Enter" || e.key === " ") {
@@ -132,10 +125,7 @@ export function LabeledDropdown<T extends string>({
 					ref={buttonRef}
 					className={clsx([
 						"border-neutral-600 bg-neutral-900",
-						focusWithin(
-							optionContainerRef.current,
-							document.activeElement,
-						)
+						focusWithin(optionContainerRef.current, document.activeElement)
 							? "ring-2 ring-accent"
 							: null,
 						"focus:outline-none focus:ring-2 focus:ring-accent",
@@ -180,9 +170,7 @@ export function LabeledDropdown<T extends string>({
 										onChange(option);
 										setOpen(false);
 									}}
-									onKeyDown={(e) =>
-										handleKeyDown(e, option, index)
-									}
+									onKeyDown={(e) => handleKeyDown(e, option, index)}
 									tabIndex={0}
 								>
 									<span>{option}</span>

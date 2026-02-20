@@ -46,9 +46,7 @@ class VaultService {
 		const pexec = Executor.createExecutor();
 
 		const encryptedItems = await Promise.all(
-			items.map((item) =>
-				this.encryptItemWithExecutor(pexec.exec, key, item),
-			),
+			items.map((item) => this.encryptItemWithExecutor(pexec.exec, key, item)),
 		);
 
 		pexec.terminate();
@@ -73,19 +71,14 @@ class VaultService {
 		const pexec = Executor.createExecutor();
 
 		const decryptedItems = await Promise.all(
-			items.map((item) =>
-				Vault.decryptItemWithExecutor(pexec.exec, key, item),
-			),
+			items.map((item) => Vault.decryptItemWithExecutor(pexec.exec, key, item)),
 		);
 
 		pexec.terminate();
 		return decryptedItems;
 	}
 
-	async createInitialVault(
-		key: string,
-		salt: string,
-	): Promise<UnlockedVault> {
+	async createInitialVault(key: string, salt: string): Promise<UnlockedVault> {
 		const unlock = await this.generateUnlockCiphertext(key);
 		return {
 			state: "unlocked",

@@ -88,9 +88,7 @@ function RouteComponent() {
 
 	const finalizeSignup = async (otp: string) => {
 		if (!registrationDataRef.current) {
-			toast.error(
-				"Registration data missing. Please try signing up again.",
-			);
+			toast.error("Registration data missing. Please try signing up again.");
 			setShowOtp(false);
 			return;
 		}

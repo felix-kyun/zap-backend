@@ -22,16 +22,10 @@ export function NoteItemPreview({
 			layoutId={item.id}
 			index={index}
 			icon={
-				<img
-					src={NoteIcon}
-					alt={"Favicon"}
-					className="bg-white object-cover"
-				/>
+				<img src={NoteIcon} alt={"Favicon"} className="bg-white object-cover" />
 			}
 			primaryText={name}
-			secondaryText={
-				content.slice(0, 30) + (content.length > 30 ? "..." : "")
-			}
+			secondaryText={content.slice(0, 30) + (content.length > 30 ? "..." : "")}
 		/>
 	);
 }

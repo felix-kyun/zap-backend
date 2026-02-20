@@ -41,9 +41,7 @@ export const LabeledPasswordInput = forwardRef<
 		}, []);
 
 		return (
-			<div
-				className={`flex flex-col w-full gap-2 mb-4 ${containerClassName}`}
-			>
+			<div className={`flex flex-col w-full gap-2 mb-4 ${containerClassName}`}>
 				{(label || error) && (
 					<div className="flex justify-between items-center w-full">
 						<label

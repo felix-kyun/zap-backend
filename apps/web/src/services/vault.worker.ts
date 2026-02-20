@@ -56,9 +56,7 @@ class VaultWorkerService {
 	}
 
 	encryptKey(derivedKey: string, privateKey: string) {
-		const nonce = sodium.randombytes_buf(
-			sodium.crypto_secretbox_NONCEBYTES,
-		);
+		const nonce = sodium.randombytes_buf(sodium.crypto_secretbox_NONCEBYTES);
 
 		const ciphertext = sodium.crypto_secretbox_easy(
 			sodium.from_base64(privateKey),
@@ -98,19 +96,15 @@ class VaultWorkerService {
 		return sodium.to_base64(key);
 	}
 
-	checkVaultKey(
-		key: string,
-		{ ciphertext, nonce }: VaultUnlockData,
-	): boolean {
+	checkVaultKey(key: string, { ciphertext, nonce }: VaultUnlockData): boolean {
 		try {
-			const encodedMessage =
-				sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(
-					null,
-					sodium.from_base64(ciphertext),
-					null,
-					sodium.from_base64(nonce),
-					sodium.from_base64(key),
-				);
+			const encodedMessage = sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(
+				null,
+				sodium.from_base64(ciphertext),
+				null,
+				sodium.from_base64(nonce),
+				sodium.from_base64(key),
+			);
 			const message = sodium.to_string(encodedMessage);
 
 			if (message === "unlock") return true;
@@ -122,14 +116,13 @@ class VaultWorkerService {
 	}
 
 	decryptItem(item: EncryptedVaultItem, key: string): VaultItem {
-		const decryptedMessage =
-			sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(
-				null,
-				sodium.from_base64(item.ciphertext),
-				null,
-				sodium.from_base64(item.nonce),
-				sodium.from_base64(key),
-			);
+		const decryptedMessage = sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(
+			null,
+			sodium.from_base64(item.ciphertext),
+			null,
+			sodium.from_base64(item.nonce),
+			sodium.from_base64(key),
+		);
 
 		const unknownItem = JSON.parse(sodium.to_string(decryptedMessage));
 		try {

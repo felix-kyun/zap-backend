@@ -1,7 +1,23 @@
 {
-  "name": "citadel",
-  "version": "0.1.0",
-  "private": true,
-  "description": "A simple and secure password and credential manager",
-  "scripts": {}
+	"name": "citadel",
+	"version": "0.1.0",
+	"private": true,
+	"description": "A simple and secure password and credential manager",
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx}": [
+			"biome check --write"
+		]
+	},
+	"scripts": {
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"format": "biome format --write .",
+		"format:check": "biome format .",
+		"typecheck": "tsc --noEmit --watch"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.3",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.7"
+	}
 }

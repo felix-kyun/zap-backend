@@ -41,10 +41,9 @@ class OpaqueService {
 	}
 
 	startLogin(password: string) {
-		const { clientLoginState, startLoginRequest } =
-			opaque.client.startLogin({
-				password,
-			});
+		const { clientLoginState, startLoginRequest } = opaque.client.startLogin({
+			password,
+		});
 
 		this.#password = password;
 		this.#loginState = clientLoginState;

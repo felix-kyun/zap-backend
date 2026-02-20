@@ -62,8 +62,7 @@ export const createVaultSlice: StateCreator<
 				items: [],
 			};
 			const response = await Api.fetch("/api/vault", "POST", lockedVault);
-			if (!response.ok)
-				throw new Error("Failed to create vault on server");
+			if (!response.ok) throw new Error("Failed to create vault on server");
 		} catch (error) {
 			set(
 				() => ({ vault: null, key: null }),
@@ -195,10 +194,7 @@ export const createVaultSlice: StateCreator<
 			set(
 				(draft) => {
 					if (draft.vault && draft.vault.state === "unlocked")
-						Utils.findAndRemove(
-							draft.vault.items,
-							(i) => i.id === item.id,
-						);
+						Utils.findAndRemove(draft.vault.items, (i) => i.id === item.id);
 				},
 				false,
 				"vault/addItem/rollback",
@@ -255,8 +251,7 @@ export const createVaultSlice: StateCreator<
 
 		if (!itemId) throw new Error("Invalid item ID");
 		if (!vault) throw new Error("No vault to delete item from");
-		if (vault.state !== "unlocked")
-			throw new Error("Vault is not unlocked");
+		if (vault.state !== "unlocked") throw new Error("Vault is not unlocked");
 
 		const index = vault.items.findIndex((i) => i.id === itemId);
 		if (index === -1) throw new Error("Item not found in vault");
@@ -272,12 +267,8 @@ export const createVaultSlice: StateCreator<
 		);
 
 		try {
-			const response = await Api.fetch(
-				`/api/vault/items/${itemId}`,
-				"DELETE",
-			);
-			if (!response.ok)
-				throw new Error("Failed to delete item from server");
+			const response = await Api.fetch(`/api/vault/items/${itemId}`, "DELETE");
+			if (!response.ok) throw new Error("Failed to delete item from server");
 		} catch (error) {
 			set(
 				(draft) => {

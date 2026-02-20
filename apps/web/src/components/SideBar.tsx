@@ -9,7 +9,7 @@ import { iconMap } from "@utils/iconMap";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaAsterisk } from "react-icons/fa";
 import { IoIosCreate, IoMdSettings } from "react-icons/io";
-import { IoLockClosed,IoLogOut } from "react-icons/io5";
+import { IoLockClosed, IoLogOut } from "react-icons/io5";
 import { useShallow } from "zustand/shallow";
 
 import { vaultTypeSchema } from "@/schemas/vault";
@@ -74,9 +74,7 @@ export function SideBar({ className }: SideBarProps) {
 					<div className="flex justify-center items-center gap-2 my-2">
 						<span className="text-4xl font-bold">
 							Zap
-							<span className="text-4xl font-bold text-accent">
-								!
-							</span>
+							<span className="text-4xl font-bold text-accent">!</span>
 						</span>
 					</div>
 					<LabeledInput
@@ -92,11 +90,7 @@ export function SideBar({ className }: SideBarProps) {
 				</div>
 				<div className="flex flex-col flex-grow justify-between">
 					<div className="flex flex-col">
-						<Link
-							to={`/dashboard/$type`}
-							params={{ type: "all" }}
-							key="all"
-						>
+						<Link to={`/dashboard/$type`} params={{ type: "all" }} key="all">
 							<MenuOption active={"all" === currentRouteType}>
 								<FaAsterisk />
 								All
@@ -105,14 +99,8 @@ export function SideBar({ className }: SideBarProps) {
 						{[...vaultTypeSchema.options].map((type) => {
 							const Icon = iconMap[type];
 							return (
-								<Link
-									to={`/dashboard/$type`}
-									params={{ type }}
-									key={type}
-								>
-									<MenuOption
-										active={type === currentRouteType}
-									>
+								<Link to={`/dashboard/$type`} params={{ type }} key={type}>
+									<MenuOption active={type === currentRouteType}>
 										<Icon />
 										{type}
 									</MenuOption>
@@ -145,9 +133,7 @@ export function SideBar({ className }: SideBarProps) {
 						/>
 						<div className="flex flex-col justify-center">
 							<span className="font-bold">{user?.username}</span>
-							<span className="text-sm text-neutral-500">
-								{user?.email}
-							</span>
+							<span className="text-sm text-neutral-500">{user?.email}</span>
 						</div>
 					</div>
 				</div>

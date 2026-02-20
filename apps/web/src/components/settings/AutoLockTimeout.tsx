@@ -29,17 +29,13 @@ export function AutoLockTimeout() {
 	const value = useMemo<ValidOption>(() => {
 		if (autoLockTimeout === undefined) return "5 Minutes";
 
-		const entry = Object.entries(map).find(
-			([, v]) => v === autoLockTimeout,
-		);
+		const entry = Object.entries(map).find(([, v]) => v === autoLockTimeout);
 		return (entry ? entry[0] : "5 Minutes") as ValidOption;
 	}, [autoLockTimeout]);
 
 	return (
 		<div className="flex justify-between items-center">
-			<label className="text-lg font-semibold">
-				Auto Lock Vault Timeout
-			</label>
+			<label className="text-lg font-semibold">Auto Lock Vault Timeout</label>
 			<div className="w-40">
 				<LabeledDropdown
 					label=""

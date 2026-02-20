@@ -23,9 +23,7 @@ export function CreateNoteItem() {
 				{...register("content")}
 			/>
 			{errors.content && (
-				<p className="text-red-500 text-sm mt-1">
-					{errors.content.message}
-				</p>
+				<p className="text-red-500 text-sm mt-1">{errors.content.message}</p>
 			)}
 		</>
 	);

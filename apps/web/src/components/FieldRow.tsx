@@ -53,9 +53,7 @@ export function SensetiveFieldRow({ label, value }: FieldRowProps) {
 			<div className="flex flex-col">
 				<span className="text-xs text-text-secondary">{label}</span>
 				<div className="flex items-center gap-2">
-					<span className="text-lg">
-						{isVisible ? value : "••••••••"}
-					</span>
+					<span className="text-lg">{isVisible ? value : "••••••••"}</span>
 					<PasswordVisibilityToggle
 						isVisible={isVisible}
 						onClick={() => setIsVisible(!isVisible)}

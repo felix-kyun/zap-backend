@@ -61,10 +61,7 @@ class ApiService {
 
 		if (!response.ok && response.status === 401) {
 			// unauthorized, try to refresh token
-			const refreshResponse = await this.#fetch(
-				"/api/auth/refresh",
-				"POST",
-			);
+			const refreshResponse = await this.#fetch("/api/auth/refresh", "POST");
 			if (!refreshResponse.ok && refreshResponse.status === 401)
 				throw new UnauthError();
 

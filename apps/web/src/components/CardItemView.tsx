@@ -32,25 +32,17 @@ export function CardItemView({ item, open, close }: CardItemViewProps) {
 					</span>
 					<div className="flex justify-between items-center w-full">
 						<span className="flex flex-col">
-							<span className="text-xs text-text-secondary">
-								Card Holder
-							</span>
+							<span className="text-xs text-text-secondary">Card Holder</span>
 							<span className="font-bold text-lg">
 								{cardHolder.toUpperCase()}
 							</span>
 						</span>
 						<span className="flex flex-col">
-							<span className="text-xs text-text-secondary">
-								Expires
-							</span>
-							<span className="font-bold text-lg">
-								{cardExpiry}
-							</span>
+							<span className="text-xs text-text-secondary">Expires</span>
+							<span className="font-bold text-lg">{cardExpiry}</span>
 						</span>
 						<span className="flex flex-col">
-							<span className="text-xs text-text-secondary">
-								CVV
-							</span>
+							<span className="text-xs text-text-secondary">CVV</span>
 							<span className="font-bold text-lg">{cardCVV}</span>
 						</span>
 					</div>

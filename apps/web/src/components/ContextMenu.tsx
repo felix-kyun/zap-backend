@@ -76,8 +76,7 @@ export function ContextMenu({
 
 		const onClick = (e: MouseEvent) => {
 			e.stopPropagation();
-			if (menuRef.current && menuRef.current.contains(e.target as Node))
-				return;
+			if (menuRef.current && menuRef.current.contains(e.target as Node)) return;
 			close();
 		};
 

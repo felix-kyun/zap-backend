@@ -11,10 +11,7 @@ export function TagsField() {
 
 	return (
 		<>
-			<NewTagModal
-				open={isModalOpen}
-				close={() => setIsModalOpen(false)}
-			/>
+			<NewTagModal open={isModalOpen} close={() => setIsModalOpen(false)} />
 			<TagArray onCreate={() => setIsModalOpen(true)} />
 		</>
 	);

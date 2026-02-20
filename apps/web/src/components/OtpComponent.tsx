@@ -35,8 +35,7 @@ export function OtpComponent({ onSubmit }: OtpComponentProps) {
 		}
 
 		// auto submit
-		if (newOtp.every((digit) => digit !== ""))
-			await submit(newOtp.join(""));
+		if (newOtp.every((digit) => digit !== "")) await submit(newOtp.join(""));
 	};
 
 	const handleKeyDown = (
@@ -76,8 +75,7 @@ export function OtpComponent({ onSubmit }: OtpComponentProps) {
 		setOtp(newOtp);
 
 		requestAnimationFrame(async () => {
-			if (newOtp.every((digit) => digit !== ""))
-				await submit(newOtp.join(""));
+			if (newOtp.every((digit) => digit !== "")) await submit(newOtp.join(""));
 			else if (inputRefs.current[Math.min(i, 5)]) {
 				inputRefs.current[Math.min(i, 5)]?.focus();
 			}
@@ -102,8 +100,7 @@ export function OtpComponent({ onSubmit }: OtpComponentProps) {
 						onPaste={(e) => handlePaste(e, index)}
 						onFocus={(e) => e.target.select()}
 						ref={(el) => {
-							if (inputRefs.current)
-								inputRefs.current[index] = el;
+							if (inputRefs.current) inputRefs.current[index] = el;
 						}}
 						className={clsx([
 							"h-16 w-14 text-center text-3xl",
