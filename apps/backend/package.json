@@ -11,7 +11,6 @@
 		"postbuild": "tsc-alias -p tsconfig.json",
 		"tsc": "tsc",
 		"test": "vitest",
-		"prepare": "husky",
 		"create-opaque-setup": "tsx src/utils/createOpaqueSetup.ts"
 	},
 	"keywords": [
