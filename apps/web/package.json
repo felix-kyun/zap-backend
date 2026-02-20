@@ -1,5 +1,5 @@
 {
-	"name": "paz-frontend",
+	"name": "@citadel/web",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
