@@ -1,0 +1,24 @@
+import clsx from "clsx";
+import type { PropsWithChildren } from "react";
+
+type MenuOptionProps = PropsWithChildren<{
+	onClick?: () => void;
+	disabled?: boolean;
+	active?: boolean;
+}>;
+
+export function MenuOption({ children, onClick, active }: MenuOptionProps) {
+	return (
+		<div
+			onClick={onClick}
+			className={clsx([
+				"flex items-center gap-2 rounded-xl px-3 py-3 cursor-pointer outline-none m-1",
+				"hover:bg-neutral-900 focus:bg-neutral-900 outline-none",
+				active && "bg-neutral-800",
+				"transition-colors duration-300 ease-out",
+			])}
+		>
+			{children}
+		</div>
+	);
+}

@@ -1,0 +1,127 @@
+import clsx from "clsx";
+import { AnimatePresence } from "motion/react";
+import * as motion from "motion/react-client";
+import {
+	forwardRef,
+	type InputHTMLAttributes,
+	useCallback,
+	useState,
+} from "react";
+import { LuEye, LuEyeOff } from "react-icons/lu";
+
+type LabeledPasswordInputProps = InputHTMLAttributes<HTMLInputElement> & {
+	id: string;
+	label: string;
+	error?: string;
+	inputClassName?: string;
+	labelClassName?: string;
+	containerClassName?: string;
+};
+
+export const LabeledPasswordInput = forwardRef<
+	HTMLInputElement,
+	LabeledPasswordInputProps
+>(
+	(
+		{
+			id,
+			label,
+			error,
+			inputClassName,
+			labelClassName,
+			containerClassName,
+			...inputProps
+		},
+		ref,
+	) => {
+		const [showPassword, setShowPassword] = useState<boolean>(false);
+
+		const toggleShowPassword = useCallback(() => {
+			setShowPassword((s) => !s);
+		}, []);
+
+		return (
+			<div className={`flex flex-col w-full gap-2 mb-4 ${containerClassName}`}>
+				{(label || error) && (
+					<div className="flex justify-between items-center w-full">
+						<label
+							htmlFor={id}
+							className={`font-bold text-sm ${labelClassName}`}
+						>
+							{label}
+						</label>
+						<AnimatePresence>
+							{error && (
+								<motion.span
+									className="text-error text-sm"
+									initial={{ opacity: 0, height: 0 }}
+									animate={{ opacity: 1, height: "auto" }}
+									exit={{ opacity: 0, height: 0 }}
+									transition={{ duration: 0.25, delay: 0.15 }}
+								>
+									{error}
+								</motion.span>
+							)}
+						</AnimatePresence>
+					</div>
+				)}
+				<div className="relative w-full">
+					<input
+						key={showPassword ? "text" : "password"}
+						type={showPassword ? "text" : "password"}
+						name={id}
+						id={id}
+						ref={ref}
+						autoComplete="off"
+						readOnly
+						onFocus={(e) => e.target.removeAttribute("readonly")}
+						className={clsx([
+							"rounded-xl py-2 px-4 w-full font-medium",
+							"border-border-secondary bg-prompt placeholder:text-text-secondary focus:ring-accent",
+							"border-[1px] focus:outline-none focus:ring-2",
+							"transition duration-200",
+							inputClassName,
+						])}
+						{...inputProps}
+					/>
+					<motion.button
+						type="button"
+						className={clsx([
+							"absolute text-xl top-1/2 -translate-y-1/2 right-3",
+							"text-text-secondary hover:text-text cursor-pointer",
+						])}
+						tabIndex={-1}
+						whileHover={{ scale: 1.15 }}
+						whileTap={{ scale: 0.9 }}
+						transition={{ duration: 0.075 }}
+						onClick={toggleShowPassword}
+					>
+						<AnimatePresence mode="wait">
+							{showPassword ? (
+								<motion.span
+									key="eye-off"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.18 }}
+								>
+									<LuEyeOff />
+								</motion.span>
+							) : (
+								<motion.span
+									key="eye"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.18 }}
+								>
+									<LuEye />
+								</motion.span>
+							)}
+						</AnimatePresence>
+					</motion.button>
+				</div>
+			</div>
+		);
+	},
+);

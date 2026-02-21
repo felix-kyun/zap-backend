@@ -1,4 +1,3 @@
-onlyBuiltDependencies:
-    - bcrypt
-    - esbuild
-    - unrs-resolver
+packages:
+  - "apps/*"
+  - "packages/*"
