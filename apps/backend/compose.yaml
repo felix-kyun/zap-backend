@@ -1,19 +1,19 @@
 # vim:tabstop=4:shiftwidth=4:expandtab
 services:
-    app:
-        build: .
-        container_name: zap-dev
-        ports:
-            - "3000:3000"
-        volumes:
-            - .:/app
-            - /app/node_modules
-        command: pnpm dev
-        depends_on:
-            - mongo
-            - redis
-        environment:
-            - DEBUG
+    # app:
+    #     build: .
+    #     container_name: zap-dev
+    #     ports:
+    #         - "3000:3000"
+    #     volumes:
+    #         - .:/app
+    #         - /app/node_modules
+    #     command: pnpm dev
+    #     depends_on:
+    #         - mongo
+    #         - redis
+    #     environment:
+    #         - DEBUG
     mongo:
         image: mongo:7
         ports:
