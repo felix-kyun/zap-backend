@@ -23,4 +23,8 @@ export default defineConfig({
 	esbuild: {
 		target: "es2024",
 	},
+	optimizeDeps: {
+		// dont optimize
+		exclude: ["libsodium-wrappers-sumo", "libsodium-wrappers"],
+	},
 });

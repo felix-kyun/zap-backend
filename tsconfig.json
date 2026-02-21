@@ -1,3 +1,0 @@
-{
-	"references": [{ "path": "./apps/web/" }, { "path": "./apps/backend/" }]
-}
